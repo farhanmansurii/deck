@@ -1,8 +1,11 @@
 import express from 'express'
-const port = 5000
+import mongoose from 'mongoose'
 const app = express()
 
-app.get('/', (req, res) => {
-  res.send('Welcome')
+app.use('/', (req, res) => {
+  res.send('WelcomeBoy')
 })
-app.listen(port)
+mongoose.connect('mongodb+srv://farhan:farhan@cluster0.23dxfen.mongodb.net/?retryWrites=true&w=majority').then(() => {
+  console.log('connection established')
+})
+app.listen(5000, () => console.log('listening on port 5000'))
