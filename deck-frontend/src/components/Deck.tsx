@@ -37,7 +37,7 @@ function Deck() {
   async function getDecks() {
     await axios.get(`https://dex-api.vercel.app/${deckId}/card`).then((response) => {
       setcard(response.data.cards)
-      setDeck(response.data)
+      setDeck(response.data.title)
 
     })
     setIsLoading(false)
@@ -74,7 +74,7 @@ function Deck() {
                 </Link>
                 <div>
 
-                  {deck['title']}
+                  {deck}
                 </div>
               </div>
 
