@@ -5,9 +5,9 @@ import { Link, useParams } from "react-router-dom";
 import Spinner from 'react-spinner-material';
 function Deck() {
   const { deckId } = useParams()
-  const [card, setcard] = useState([])
+  const [card, setcard] = useState<any[]>([])
   const [isloading, setIsLoading] = useState(true)
-  const [deck, setDeck] = useState([])
+  const [deck, setDeck] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
   const [status, setStatus] = useState<string | undefined>()
   const [text, setText] = useState<string | undefined>()
@@ -74,7 +74,7 @@ function Deck() {
                 </Link>
                 <div>
 
-                  {deck.title}
+                  {deck['title']}
                 </div>
               </div>
 
