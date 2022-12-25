@@ -10,7 +10,6 @@ import { deleteDeckController } from './contoller/deck/deleteDeckController'
 import { getDeckController } from './contoller/deck/getDeckController'
 
 config();
-console.log(process.env)
 const app = express()
 app.use(
   cors({

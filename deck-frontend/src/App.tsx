@@ -100,7 +100,7 @@ function App() {
                       animate={{ scale: 1 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <div key={deck._id} className=' min-h-[100px] lg:aspect-video text-2xl items-center  flex justify-between   hover:scale-[98%] duration-150  hover:bg-[#bebebe]/80 rounded-xl text-[#363636] bg-[#bebebe]' >
+                      <div key={deck._id} className=' min-h-[100px] break-all lg:aspect-video text-2xl items-center  flex justify-between   hover:scale-[98%] duration-150  hover:bg-[#bebebe]/80 rounded-xl text-[#363636] bg-[#bebebe]' >
                         <Link to={`/deck/${deck._id}`} className=' px-5 capitalize text-[#363636]'>
                           {deck.title}
                         </Link>
