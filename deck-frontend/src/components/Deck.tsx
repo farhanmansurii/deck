@@ -15,7 +15,7 @@ function Deck() {
     e.preventDefault()
     if (text?.trim().length > 0) {
 
-      await fetch(`http://localhost:5000/deck/${deckId}/card`, {
+      await fetch(`https://dex-api.vercel.app/${deckId}/card`, {
         method: 'POST',
         body: JSON.stringify({
           text
@@ -30,12 +30,12 @@ function Deck() {
   async function deleteCard(deckId: any, index: number) {
 
     if (!deckId) return;
-    await axios.delete(`http://localhost:5000/deck/${deckId}/card/${index}`).then(res => console.log(res))
+    await axios.delete(`https://dex-api.vercel.app/${deckId}/card/${index}`).then(res => console.log(res))
     getDecks()
 
   }
   async function getDecks() {
-    await axios.get(`http://localhost:5000/deck/${deckId}/card`).then((response) => {
+    await axios.get(`https://dex-api.vercel.app/${deckId}/card`).then((response) => {
       setcard(response.data.cards)
       setDeck(response.data)
 

@@ -22,7 +22,7 @@ function App() {
     e.preventDefault()
     if (title?.trim().length > 0) {
 
-      await fetch('http://localhost:5000/deck', {
+      await fetch('https://dex-api.vercel.app/deck', {
         method: 'POST',
         body: JSON.stringify({
           title,
@@ -34,7 +34,7 @@ function App() {
     }
   }
   async function deleteDecks(id: any) {
-    await axios.delete(`http://localhost:5000/deck/${id}`).then(res => {
+    await axios.delete(`https://dex-api.vercel.app/deck/${id}`).then(res => {
       console.log(res)
       setStatus("Deck Deleted")
       getDecks()
@@ -43,7 +43,7 @@ function App() {
 
   }
   async function getDecks() {
-    await axios.get('http://localhost:5000/deck').then((response) => {
+    await axios.get('https://dex-api.vercel.app/deck').then((response) => {
       setdecks(response.data)
     })
     setIsLoading(false)
