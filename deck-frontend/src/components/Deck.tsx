@@ -13,7 +13,7 @@ function Deck() {
   const [text, setText] = useState<string | undefined>()
   async function handleCreateDeck(e: React.FormEvent) {
     e.preventDefault()
-    if (text?.trim().length > 0) {
+    if (text?.trim().length ?? 1 > 0) {
 
       await fetch(`https://dex-api.vercel.app/${deckId}/card`, {
         method: 'POST',

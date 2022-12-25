@@ -20,7 +20,7 @@ function App() {
   };
   async function handleCreateDeck(e: React.FormEvent) {
     e.preventDefault()
-    if (title?.trim().length > 0) {
+    if (title?.trim().length ?? 1 > 0) {
 
       await fetch('https://dex-api.vercel.app/deck', {
         method: 'POST',
