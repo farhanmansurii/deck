@@ -19,7 +19,7 @@ app.use(
 )
 app.use(express.json())
 app.get('/', (req: Request, res: Response) => {
-  res.send('WelcomeBoy')
+  res.send('WelcomeBoy to the API')
 })
 
 
