@@ -31,7 +31,7 @@ function App() {
         headers: {
           'Content-Type': 'application/json',
         },
-      }).then(response => { console.log(response), getDecks(), settitle(''), setIsLoading(false), setStatus("New Deck Created") },)
+      }).then(response => { settitle(''), getDecks(), setIsLoading(false) },)
     }
   }
   async function deleteDecks(id: any) {
