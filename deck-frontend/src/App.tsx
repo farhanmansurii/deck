@@ -58,7 +58,7 @@ function App() {
       initial={{ scale: 0.8 }}
 
       animate={{ scale: 1 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.25 }}
     >
       <div className=" font-sans min-h-screen  bg-[#363636] text-[#bebebe] w-11/12 lg:w-9/12 mx-auto py-10 flex-col flex">
         <div className=" text-5xl lg:text-7xl my-2  capitalize">All Boards</div>
@@ -98,7 +98,7 @@ function App() {
                     <motion.div
                       initial={{ scale: 0.6, }}
                       animate={{ scale: 1 }}
-                      transition={{ duration: 0.3 }}
+                      transition={{ duration: 0.25 }}
                     >
                       <div key={deck._id} className=' min-h-[100px] break-all lg:aspect-video text-2xl items-center  flex justify-between   hover:scale-[98%] duration-150  hover:bg-[#bebebe]/80 rounded-xl text-[#363636] bg-[#bebebe]' >
                         <Link to={`/deck/${deck._id}`} className=' px-5 capitalize text-[#363636]'>
