@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { AnimatePresence, motion, useAnimation } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import Spinner from 'react-spinner-material';
@@ -20,6 +20,7 @@ function App() {
   };
   async function handleCreateDeck(e: React.FormEvent) {
     e.preventDefault()
+    setIsLoading(true)
     if (title?.trim().length ?? 1 > 0) {
 
       await fetch('https://dex-api.vercel.app/deck', {
@@ -30,19 +31,22 @@ function App() {
         headers: {
           'Content-Type': 'application/json',
         },
-      }).then(response => { console.log(response), getDecks(), settitle(''), setStatus("New Deck Created") },)
+      }).then(response => { console.log(response), getDecks(), settitle(''), setIsLoading(false), setStatus("New Deck Created") },)
     }
   }
   async function deleteDecks(id: any) {
+    setIsLoading(true)
     await axios.delete(`https://dex-api.vercel.app/deck/${id}`).then(res => {
       console.log(res)
       setStatus("Deck Deleted")
       getDecks()
       setLoading(false)
+      setIsLoading(false)
     })
 
   }
   async function getDecks() {
+    setIsLoading(true)
     await axios.get('https://dex-api.vercel.app/deck').then((response) => {
       setdecks(response.data)
     })
@@ -93,36 +97,25 @@ function App() {
 
 
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
-                <AnimatePresence>
-                  {decks.reverse().map((deck: any) => (
-                    <motion.div
-                      initial={{ scale: 0.6, }}
-                      animate={{ scale: 1 }}
-                      transition={{ duration: 0.25 }}
-                    >
-                      <div key={deck._id} className=' min-h-[100px] break-all lg:aspect-video text-2xl items-center  flex justify-between   hover:scale-[98%] duration-150  hover:bg-[#bebebe]/80 rounded-xl text-[#363636] bg-[#bebebe]' >
-                        <Link to={`/deck/${deck._id}`} className=' px-5 capitalize text-[#363636]'>
-                          {deck.title}
-                        </Link>
+                {decks.length > 0 ? decks.reverse().map((deck: any) => (
 
-                        <div className='p-3' onClick={() => {
-                          setLoading(true)
-                          setTimeout(() => {
-                            { deleteDecks(deck._id) }
+                  <div key={deck._id} className=' min-h-[100px] break-all lg:aspect-video text-2xl items-center  flex justify-between   hover:scale-[98%] duration-150  hover:bg-[#bebebe]/80 rounded-xl text-[#363636] bg-[#bebebe]' >
+                    <Link to={`/deck/${deck._id}`} className=' px-5 capitalize text-[#363636]'>
+                      {deck.title}
+                    </Link>
 
-                          }, 300)
-                        }}>
+                    <div className='p-3' onClick={() =>
+                      deleteDecks(deck._id)
+                    }>
 
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 hover:text-red-500 duration-150 hover:animate-pulse rounded-full  h-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                          </svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 hover:text-red-500 duration-150 hover:animate-pulse rounded-full  h-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
 
-                        </div>
+                    </div>
 
-                      </div>
-                    </motion.div>
-                  ))}
-                </AnimatePresence>
+                  </div>
+                )) : (<div className=' text-center text-3xl mt-10 mx-auto flex w-10/12 '> No Decks :/</div>)}
               </div>
             )}
         </div>
