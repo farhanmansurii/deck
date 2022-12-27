@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
 import { createCard } from '../api/createCard'
 import { deleteCard } from '../api/deleteCard'
 import { getDeck } from '../api/getDeck'
@@ -12,9 +13,14 @@ function Deck() {
   const [text, setText] = useState<string | undefined>()
   async function handleCreateDeck(e: React.FormEvent) {
     e.preventDefault()
-    const { cards: serverCards } = await createCard(deckId!, text)
-    setcard(serverCards)
-    setText('')
+    if (text === '' || text?.trim().length === 0) {
+      ;<ToastContainer position="top-right" autoClose={5000} hideProgressBar newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored" />
+    } else {
+      const newText = text?.trim()
+      const { cards: serverCards } = await createCard(deckId!, newText)
+      setcard(serverCards)
+      setText('')
+    }
   }
 
   async function deleteCards(deckId: any, index: number) {

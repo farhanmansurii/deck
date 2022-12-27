@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
 import { createDeck } from './api/createDeck'
 import { deleteDeck } from './api/deleteDecks'
 import { getDecks, TDeck } from './api/getDecks'
@@ -8,12 +9,19 @@ import './App.css'
 function App() {
   const [decks, setdecks] = useState<TDeck[]>([])
   const [title, settitle] = useState<string | undefined>()
-
+  function notify() {
+    ;<ToastContainer position="top-right" autoClose={5000} hideProgressBar newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored" />
+  }
   async function handleCreateDeck(e: React.FormEvent) {
     e.preventDefault()
-    const deck = await createDeck(title)
-    setdecks([...decks, deck])
-    settitle('')
+    if (title === '' || title?.trim().length === 0) {
+    } else {
+      const newtitle = title?.trim()
+      // input is a valid todo item
+      const deck = await createDeck(newtitle)
+      setdecks([...decks, deck])
+      settitle('')
+    }
   }
   async function deleteDecks(id: any) {
     setdecks(decks.filter((deck) => deck._id !== id))
@@ -42,6 +50,7 @@ function App() {
               className="w-10/12 p-2 focus:border-b-2 focus:border-[#bebebe] placeholder:text-[#bebebe] text-xl bg-inherit border-0 focus:outline-none"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => settitle(e.target.value)}
             />
+
             <button className="bg-[#bebebe] hover:text-[#bebebe] w-fit hover:bg-[#363636] hover:border-[#bebebe] border-[#363636] border-2 text-[#363636] p-3 hover: duration-200 hover:scale-95 rounded-full border-3 ">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
