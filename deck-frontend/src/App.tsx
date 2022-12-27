@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ToastContainer } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { createDeck } from './api/createDeck'
 import { deleteDeck } from './api/deleteDecks'
 import { getDecks, TDeck } from './api/getDecks'
@@ -10,14 +11,14 @@ function App() {
   const [decks, setdecks] = useState<TDeck[]>([])
   const [title, settitle] = useState<string | undefined>()
   function notify() {
-    ;<ToastContainer position="top-right" autoClose={5000} hideProgressBar newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored" />
+    toast('Enter  a valid board name!')
   }
   async function handleCreateDeck(e: React.FormEvent) {
     e.preventDefault()
     if (title === '' || title?.trim().length === 0) {
+      notify()
     } else {
       const newtitle = title?.trim()
-      // input is a valid todo item
       const deck = await createDeck(newtitle)
       setdecks([...decks, deck])
       settitle('')
@@ -89,6 +90,7 @@ function App() {
           </div>
         </div>
       </div>
+      <ToastContainer position="top-right" autoClose={2000} hideProgressBar newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored" />
     </motion.div>
   )
 }

@@ -1,20 +1,23 @@
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { ToastContainer } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 import { createCard } from '../api/createCard'
 import { deleteCard } from '../api/deleteCard'
 import { getDeck } from '../api/getDeck'
 import { TDeck } from '../api/getDecks'
 function Deck() {
   const { deckId } = useParams()
+  function notify() {
+    toast('Enter  a valid card name!')
+  }
   const [card, setcard] = useState<string[]>([])
   const [deck, setDeck] = useState<TDeck | undefined>()
   const [text, setText] = useState<string | undefined>()
   async function handleCreateDeck(e: React.FormEvent) {
     e.preventDefault()
-    if (text === '' || text?.trim().length === 0) {
-      ;<ToastContainer position="top-right" autoClose={5000} hideProgressBar newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored" />
+    if (text === ' ' || text?.trim().length === 0) {
+      notify()
     } else {
       const newText = text?.trim()
       const { cards: serverCards } = await createCard(deckId!, newText)
@@ -113,6 +116,7 @@ function Deck() {
         </div>
         )
       </div>
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored" />
     </motion.div>
   )
 }
