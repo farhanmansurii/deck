@@ -1,25 +1,14 @@
-import { motion, useAnimation } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import Spinner from 'react-spinner-material'
 import { createDeck } from './api/createDeck'
 import { deleteDeck } from './api/deleteDecks'
 import { getDecks, TDeck } from './api/getDecks'
 import './App.css'
 function App() {
   const [decks, setdecks] = useState<TDeck[]>([])
-  const [loading, setLoading] = useState(false)
-  const [isloading, setIsLoading] = useState(false)
-  const [status, setStatus] = useState<string | undefined>()
   const [title, settitle] = useState<string | undefined>()
-  const ripple = useAnimation()
 
-  const startRipple = () => {
-    ripple.start({
-      scale: 1,
-      transition: { duration: 0.5 },
-    })
-  }
   async function handleCreateDeck(e: React.FormEvent) {
     e.preventDefault()
     const deck = await createDeck(title)
@@ -60,41 +49,35 @@ function App() {
             </button>
           </form>
 
-          {isloading ? (
-            <div className="w-full grid justify-center h-[200px] ">
-              <Spinner radius={30} color={'#bebebe'} stroke={2} visible={true} className="my-auto" />
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
-              {decks.length > 0 ? (
-                decks.reverse().map((deck: any) => (
-                  <div
-                    key={deck._id}
-                    className=" min-h-[100px] break-all lg:aspect-video text-2xl items-center  flex justify-between   hover:scale-[98%] duration-150  hover:bg-[#bebebe]/80 rounded-xl text-[#363636] bg-[#bebebe]"
-                  >
-                    <Link to={`/deck/${deck._id}`} className=" px-5 capitalize text-[#363636]">
-                      {deck.title}
-                    </Link>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+            {decks.length > 0 ? (
+              decks.reverse().map((deck: any) => (
+                <div
+                  key={deck._id}
+                  className=" min-h-[100px] break-all lg:aspect-video text-2xl items-center  flex justify-between   hover:scale-[98%] duration-150  hover:bg-[#bebebe]/80 rounded-xl text-[#363636] bg-[#bebebe]"
+                >
+                  <Link to={`/deck/${deck._id}`} className=" px-5 capitalize text-[#363636]">
+                    {deck.title}
+                  </Link>
 
-                    <div className="p-3" onClick={() => deleteDecks(deck._id)}>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="w-6 hover:text-red-500 duration-150 hover:animate-pulse rounded-full  h-6"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </div>
+                  <div className="p-3" onClick={() => deleteDecks(deck._id)}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 hover:text-red-500 duration-150 hover:animate-pulse rounded-full  h-6"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
                   </div>
-                ))
-              ) : (
-                <div className=" text-center text-3xl mt-10 mx-auto flex w-10/12 "> No Decks :/</div>
-              )}
-            </div>
-          )}
+                </div>
+              ))
+            ) : (
+              <div className=" text-center text-3xl mt-10 mx-auto flex w-10/12 "> No Decks :/</div>
+            )}
+          </div>
         </div>
       </div>
     </motion.div>

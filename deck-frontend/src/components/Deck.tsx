@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
@@ -9,7 +8,6 @@ import { TDeck } from '../api/getDecks'
 function Deck() {
   const { deckId } = useParams()
   const [card, setcard] = useState<string[]>([])
-  const [isloading, setIsLoading] = useState(true)
   const [deck, setDeck] = useState<TDeck | undefined>()
   const [text, setText] = useState<string | undefined>()
   async function handleCreateDeck(e: React.FormEvent) {
@@ -24,14 +22,7 @@ function Deck() {
     const newDeck = await deleteCard(deckId, index)
     setcard(newDeck.cards)
   }
-  async function getDecks() {
-    setIsLoading(true)
-    await axios.get(`https://dex-api.vercel.app/deck/${deckId}/card`).then((response) => {
-      setcard(response.data.cards)
-      setDeck(response.data)
-    })
-    setIsLoading(false)
-  }
+
   useEffect(() => {
     async function fetchDeck() {
       if (!deckId) return
