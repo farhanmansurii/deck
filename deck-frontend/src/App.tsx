@@ -51,7 +51,7 @@ function App() {
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
             {decks.length > 0 ? (
-              decks.reverse().map((deck: any) => (
+              decks.map((deck: any) => (
                 <div
                   key={deck._id}
                   className=" min-h-[100px] break-all lg:aspect-video text-2xl items-center  flex justify-between   hover:scale-[98%] duration-150  hover:bg-[#bebebe]/80 rounded-xl text-[#363636] bg-[#bebebe]"
